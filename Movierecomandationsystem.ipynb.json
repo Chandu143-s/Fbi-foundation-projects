@@ -1,0 +1,136 @@
+{
+  "metadata": {
+    "kernelspec": {
+      "name": "python",
+      "display_name": "Python (Pyodide)",
+      "language": "python"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "python",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.8"
+    }
+  },
+  "nbformat_minor": 4,
+  "nbformat": 4,
+  "cells": [
+    {
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true,
+        "jupyter": {
+          "source_hidden": true
+        }
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "# Movie Recommendation System\n\n# Title of Project\n\"\"\"\nMovie Recommendation System\n\"\"\"\n\n# Objective\n\"\"\"\nThe objective of this project is to build a movie recommendation system that suggests movies to users based on their preferences and ratings.\n\"\"\"\n\n# Data Source\n\"\"\"\nWe will use the MovieLens dataset, a popular dataset for movie recommendations.\n\"\"\"\n\n# Import Library\nimport pandas as pd\nimport numpy as np\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.metrics import mean_squared_error\nfrom scipy.sparse.linalg import svds\n\n# Import Data\nmovies = pd.read_csv('movies.csv')\nratings = pd.read_csv('ratings.csv')\n\n# Describe Data\nprint(movies.head())\nprint(ratings.head())\n\n# Data Visualization\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n# Distribution of Ratings\nsns.countplot(ratings['rating'])\nplt.title('Distribution of Movie Ratings')\nplt.xlabel('Rating')\nplt.ylabel('Count')\nplt.show()\n\n# Data Preprocessing\n# Creating the User-Item Matrix\nR_df = ratings.pivot(index='userId', columns='movieId', values='rating').fillna(0)\nR = R_df.values\n\n# Define Target Variable (y) and Feature Variables (X)\n# In this case, our features are the user and movie interactions in the matrix R\n\n# Train Test Split\ntrain_data, test_data = train_test_split(ratings, test_size=0.2, random_state=42)\n\n# Modeling\n# Singular Value Decomposition\nU, sigma, Vt = svds(R, k=50)\nsigma = np.diag(sigma)\n\n# Predicting Ratings\npredicted_ratings = np.dot(np.dot(U, sigma), Vt)\n\n# Model Evaluation\n# Root Mean Squared Error\ndef rmse(predicted, actual):\n    predicted = predicted[actual.nonzero()].flatten()\n    actual = actual[actual.nonzero()].flatten()\n    return np.sqrt(mean_squared_error(predicted, actual))\n\nprint('RMSE:', rmse(predicted_ratings, R))\n\n# Prediction\n# Recommending Movies\nuser_row_number = 0  # For example, user with userId = 1\nsorted_user_predictions = predicted_ratings[user_row_number].argsort()[::-1]\nprint('Top 10 movie recommendations for user 1:')\nfor i in sorted_user_predictions[:10]:\n    print(movies.loc[movies['movieId'] == i, 'title'].values[0])\n\n# Explanation\n\"\"\"\nThis project uses collaborative filtering to recommend movies. Collaborative filtering works by decomposing the user-item interaction matrix using Singular Value Decomposition (SVD). The decomposed matrices are used to predict the ratings for movies that a user has not seen yet. The top-rated predictions are recommended to the user.\n\"\"\"\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    }
+  ]
+}

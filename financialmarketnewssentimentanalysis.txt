@@ -1,0 +1,66 @@
+# Financial Market News Sentiment Analysis
+
+## ObjectiveThe objective of this project is to analyze the sentiment of financial market news and classify them as positive, negative, or neutral.
+
+## Data SourceThe dataset is sourced from [Your Data Source], which includes a collection of financial news headlines and their respective sentiment labels.
+
+## Import Library
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+
+## Import Data
+# Load the dataset
+data = pd.read_csv('financial_news_data.csv')
+data.head()
+
+## Describe Data
+# Display basic information about the dataset
+print(data.info())
+print(data.describe())
+
+# Check for missing values
+print(data.isnull().sum())
+
+## Describe Data
+# Display basic information about the dataset
+print(data.info())
+print(data.describe())
+
+# Check for missing values
+print(data.isnull().sum())
+
+## Data Visualization
+# Visualize the distribution of sentiment labels
+sns.countplot(x='sentiment', data=data)
+plt.title('Distribution of Sentiment Labels')
+plt.show()
+
+## Data Preprocessing
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
+import string
+
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
+
+stop_words = set(stopwords.words('english'))
+lemmatizer = WordNetLemmatizer()
+
+def preprocess_text(text):
+    tokens = word_tokenize(text)
+    tokens = [word.lower() for word in tokens if word.isalpha()]
+    tokens = [lemmatizer.lemmatize(word) for word in tokens if word not in stop_words]
+    return ' '.join(tokens)
+
+data['cleaned_text'] = data['headline'].apply(preprocess_text)
+data.head()
+

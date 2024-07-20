@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "kernelspec": {
+      "name": "python",
+      "display_name": "Python (Pyodide)",
+      "language": "python"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "python",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.8"
+    }
+  },
+  "nbformat_minor": 4,
+  "nbformat": 4,
+  "cells": [
+    {
+      "cell_type": "code",
+      "source": "# Financial Market News Sentiment Analysis\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Objective\nThe objective of this project is to analyze the sentiment of financial market news and classify them as positive, negative, or neutral.\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Data Source\nThe dataset is sourced from [Your Data Source], which includes a collection of financial news headlines and their respective sentiment labels.\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Import Library\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.naive_bayes import MultinomialNB\nfrom sklearn.metrics import classification_report, confusion_matrix, accuracy_score\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Import Data\n# Load the dataset\ndata = pd.read_csv('financial_news_data.csv')\ndata.head()\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Describe Data\n# Display basic information about the dataset\nprint(data.info())\nprint(data.describe())\n\n# Check for missing values\nprint(data.isnull().sum())\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Data Visualization\n# Visualize the distribution of sentiment labels\nsns.countplot(x='sentiment', data=data)\nplt.title('Distribution of Sentiment Labels')\nplt.show()\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Data Preprocessing\nimport nltk\nfrom nltk.corpus import stopwords\nfrom nltk.tokenize import word_tokenize\nfrom nltk.stem import WordNetLemmatizer\nimport string\n\nnltk.download('punkt')\nnltk.download('stopwords')\nnltk.download('wordnet')\n\nstop_words = set(stopwords.words('english'))\nlemmatizer = WordNetLemmatizer()\n\ndef preprocess_text(text):\n    tokens = word_tokenize(text)\n    tokens = [word.lower() for word in tokens if word.isalpha()]\n    tokens = [lemmatizer.lemmatize(word) for word in tokens if word not in stop_words]\n    return ' '.join(tokens)\n\ndata['cleaned_text'] = data['headline'].apply(preprocess_text)\ndata.head()\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Define Target Variable (y) and Feature Variables (X)\nX = data['cleaned_text']\ny = data['sentiment']\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Train Test Split\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    }
+  ]
+}

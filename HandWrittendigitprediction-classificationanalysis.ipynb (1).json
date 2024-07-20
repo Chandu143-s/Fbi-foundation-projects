@@ -1,0 +1,160 @@
+{
+  "metadata": {
+    "kernelspec": {
+      "name": "python",
+      "display_name": "Python (Pyodide)",
+      "language": "python"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "python",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.8"
+    }
+  },
+  "nbformat_minor": 4,
+  "nbformat": 4,
+  "cells": [
+    {
+      "cell_type": "code",
+      "source": "# Handwritten Digit Prediction and Classification\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Objective\nThe objective of this project is to build a machine learning model to classify handwritten digits from the MNIST dataset.\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Data Source\nThe dataset used in this project is the MNIST dataset, which is a large database of handwritten digits commonly used for training various image processing systems.\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Import Library\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.decomposition import PCA\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import classification_report, confusion_matrix, accuracy_score\nfrom sklearn.datasets import fetch_openml\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Import Data\n# Load the MNIST dataset\nmnist = fetch_openml('mnist_784', version=1)\nX, y = mnist[\"data\"], mnist[\"target\"]\n\n# Display the shape of the dataset\nprint(\"Shape of X:\", X.shape)\nprint(\"Shape of y:\", y.shape)\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Describe Data\n# Display basic information about the dataset\nprint(X.info())\nprint(y.value_counts())\n\n# Display the first few rows of the dataset\nX.head()\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Data Visualization\n# Display some example digits\nfig, axes = plt.subplots(1, 10, figsize=(10, 1))\nfor i in range(10):\n    axes[i].imshow(X.iloc[i].values.reshape(28, 28), cmap='gray')\n    axes[i].axis('off')\nplt.show()\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Data Preprocessing\n# Convert the target variable to integer\ny = y.astype(np.int64)\n\n# Standardize the feature data\nscaler = StandardScaler()\nX_scaled = scaler.fit_transform(X)\n\n# Reduce dimensionality using PCA\npca = PCA(n_components=0.95)\nX_pca = pca.fit_transform(X_scaled)\nprint(\"Shape of X after PCA:\", X_pca.shape)\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Define Target Variable (y) and Feature Variables (X)\nX = X_pca\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Train Test Split\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Modeling\n# Train a Logistic Regression model\nmodel = LogisticRegression(max_iter=1000)\nmodel.fit(X_train, y_train)\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Model Evaluation\n# Predictions and evaluation\ny_pred = model.predict(X_test)\nprint(confusion_matrix(y_test, y_pred))\nprint(classification_report(y_test, y_pred))\nprint(f'Accuracy: {accuracy_score(y_test, y_pred) * 100:.2f}%')\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Prediction\n# Example prediction\nexample_digit = X_test[0].reshape(1, -1)\npredicted_label = model.predict(example_digit)\nprint(f'Predicted Label: {predicted_label[0]}')\n\n# Display the example digit\nplt.imshow(X_test[0].reshape(28, 28), cmap='gray')\nplt.title(f'Predicted Label: {predicted_label[0]}')\nplt.axis('off')\nplt.show()\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "## Explanation\nThis project uses a Logistic Regression classifier to perform digit recognition on the MNIST dataset. The feature data is preprocessed by standardizing and applying PCA for dimensionality reduction. The model's performance is evaluated using accuracy, confusion matrix, and classification report.\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    },
+    {
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    }
+  ]
+}
